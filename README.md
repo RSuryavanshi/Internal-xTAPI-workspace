@@ -18,11 +18,11 @@
 
 - Documentation:  
   - Pydoc 
-    '''
+    ```
     python C:\Python27\Lib\pydoc.py -w openhltest > pydoc_gen-openhlt.html
-    '''
+    ```
     
   - pydocmd  (https://github.com/fboender/pydocmd)
-    '''
+    ```
     python pydocmd.py openhltest.py > openhltest_doc.md
-    '''
+    ```
