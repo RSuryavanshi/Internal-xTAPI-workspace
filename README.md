@@ -1,5 +1,6 @@
 # Internal xTAPI GIT Workspace!!!
 
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://en.wikipedia.org/wiki/MIT_License)
 
 [README.md format](https://help.github.com/articles/basic-writing-and-formatting-syntax/).
 
