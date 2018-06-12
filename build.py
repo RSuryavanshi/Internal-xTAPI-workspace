@@ -244,10 +244,7 @@ class CiBuild(object):
 
 
 cibuild = CiBuild()
-cibuild.check_changed_files()
 cibuild.validate_models()
 cibuild.generate_model_views()
 cibuild.generate_openhltest_client()
 cibuild.generate_python_documentation()
-cibuild.move_model_views_to_openhltest_client()
-cibuild.update_repository()
