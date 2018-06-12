@@ -9,18 +9,18 @@
 - GITHUB basics
 
 # Commands
-    ```
+
     git init
     git add
     git commit -m "First commit.."
     git remote add origin https://github.com/RSuryavanshi/hello-world.git
     git push -u origin master
-    ```
+
     
     
 Other Commands:
 
-    ```
+
     git add -A
     git commit -m <message>
     git push
@@ -37,7 +37,7 @@ Other Commands:
     #To cache password
     git config --global credential.helper wincred
 
-    ```
+
 
 - [Travis CI](https://travis-ci.org/)
   - [Badges](http://shields.io/)
