@@ -27,8 +27,8 @@ submodule openhltest-port-config {
 
         container config-ports {
             list port-map {
-                key "port-name";
-                leaf port-name {
+                key "port_name";
+                leaf port_name {
                     description "The name of an abstract test port";
                     type string;
                 }
@@ -45,8 +45,8 @@ submodule openhltest-port-config {
             }
 
             list aggregate-port {
-                key 'port-group-name';
-                leaf port-group-name {
+                key 'port_group_name';
+                leaf port_group_name {
                     type string;
                     description 
                         "Aggregate port name";

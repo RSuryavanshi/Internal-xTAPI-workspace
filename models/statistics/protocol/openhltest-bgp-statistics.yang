@@ -26,12 +26,12 @@ submodule openhltest-bgp-statistics {
           
         list bgp-statistics {
 
-			key "port-name device-group-name";
-			leaf port-name {
+			key "device_group_name";
+			leaf port_name {
 				description "An abstract test port name";
 				type string;
 			}
-			leaf device-group-name {
+			leaf device_group_name {
 				description "An abstract test port name";
 				type string;
 			}
