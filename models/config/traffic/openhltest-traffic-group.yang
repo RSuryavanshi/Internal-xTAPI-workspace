@@ -1,0 +1,143 @@
+submodule openhltest-traffic-group {
+
+    yang-version "1.1";
+    belongs-to "openhltest" {
+		prefix "oht";
+	}
+
+    include openhltest-traffic-ethernet-group;
+    include openhltest-traffic-ipv4-group;
+
+    import openhltest-types {
+        prefix t;
+    }
+    
+    organization
+      "OpenHlTest working group";
+    contact
+      "OpenHlTest working group";
+    description
+      "This module describes a collection of traffic groups
+	  and associated rpcs.";
+
+    revision 2018-02-09 {
+        description
+          "Initial revision.";
+        reference
+          "0.0.1";
+    }
+
+    grouping traffic-group-top {
+        description
+        "A grouping of traffic groups.
+		 A traffic group is a collection of traffic streams and flows.";
+		
+		list traffic-groups {
+			key "name";
+			description
+			"A list of traffic groups";
+
+			leaf name {
+				type string;
+				description
+				"The unique name of a traffic group";
+			}
+			leaf-list src-endpoint-device-group-names {
+				type string;
+				description
+				"The unique name of a traffic group";
+			}
+			leaf-list dest-endpoint-device-group-names {
+				type string;
+				description
+				"The unique name of a traffic group";
+			}
+			leaf protocol-interface {
+				type string;
+				description
+				"The unique name of a traffic group";
+			}
+            
+			container frame-length {
+                container fixed-mode {
+                    leaf frame-size {
+                        type int32;
+                        description
+                        "The unique name of a traffic group";
+                    }
+                }
+			}
+            
+            container frame-load {
+                leaf value {
+                    type int32;
+                    description
+                    "The unique name of a traffic group";
+                }
+                leaf unit {
+                    type string;
+                    description
+                    "The unique name of a traffic group";
+                }
+            }
+
+            leaf bidirectional {
+                type boolean;
+                description
+                "The unique name of a traffic group";
+            }
+            
+            list frame {
+                key "name";
+                description
+                "A list frames";
+                
+                leaf name {
+                    type string;
+                    description
+                    "The unique name";
+                }
+                uses traffic-ethernet-group-top;
+                uses traffic-ipv4-group-top;
+            }
+            
+		}
+        
+		action start-traffic {
+			description
+			"Start one or more traffic groups.
+			An empty list signifies that all traffic groups will be started.";
+
+			input {
+				leaf-list traffic-group-names {
+					description "A list of traffic group names";
+					type string;
+				}
+			}
+			output {
+				uses t:errata-group {
+					description "A list of traffic group resources that failed to start.
+					An empty list signifies that all traffic groups successfully started.";
+				}
+			}
+		}
+		action stop-traffic {
+			description
+			"Stop one or more traffic groups. 
+			An empty list signifies that all traffic groups will be stopped.";
+
+			input {
+				leaf-list traffic-group-names {
+					description "A list of traffic group names";
+					type string;
+				}
+			}
+			output {
+				uses t:errata-group {
+					description "A list of traffic group resources that failed to start.
+					An empty list signifies that all traffic groups successfully stopped.";
+				}
+			}
+		}
+    }
+}

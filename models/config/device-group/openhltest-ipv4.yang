@@ -1,0 +1,61 @@
+submodule openhltest-ipv4 {
+
+    yang-version "1.1";
+    belongs-to "openhltest" {
+		prefix "oht";
+	}
+
+    import openhltest-types {
+        prefix t;
+    }
+
+	organization
+      "OpenHlTest working group";
+    contact
+      "OpenHlTest working group";
+    description
+      "This module describes a collection of emulated devices
+	  and associated rpcs.";
+
+    revision 2018-02-09 {
+        description
+          "Initial revision.";
+        reference
+          "0.0.1";
+    }
+
+    grouping ipv4 {
+        description
+        "A reuseable grouping of IPv4 Interface.";
+   
+		list ipv4 {
+			key "name";
+			description
+			"A list of IPv4 interfaces";
+            
+			leaf name {
+				type string;
+				description
+				"The unique name of IPv4 interface";
+			}
+			uses t:protocol-link-group;
+            
+			container address {
+				description
+				"IPv4 Address";
+                leaf value {
+                    type string;
+                }
+                uses t:pattern;
+			}
+			container gateway {
+				description
+				"IPv4 Gateway";
+                leaf value {
+                    type string;
+                }
+                uses t:pattern;
+			}
+		}
+    }    
+}

@@ -1,0 +1,58 @@
+submodule openhltest-devices {
+
+    yang-version "1.1";
+    belongs-to "openhltest" {
+		prefix "oht";
+	}
+
+
+    include openhltest-vlan;
+    include openhltest-ethernet;
+    include openhltest-ipv4;
+    include openhltest-bgp-config;
+    
+	organization
+      "OpenHlTest working group";
+    contact
+      "OpenHlTest working group";
+    description
+      "This module describes a collection of emulated protocols
+	  and associated rpcs.";
+
+    revision 2018-02-09 {
+        description
+          "Initial revision.";
+        reference
+          "0.0.1";
+    }
+
+    grouping devices-top {
+        description
+        "A reuseable grouping of emulated protocols.
+		 A device group is a collection of emulated protocols sharing the 
+		 same group level scaling features.";
+
+		list devices {
+			key "name";
+			description
+			"A list of emulated device groups";
+            
+			leaf name {
+				type string;
+				description
+				"The unique name of an emulated device group";
+			}
+            
+			leaf device-count {
+				type int32;
+				description
+				"Number of emulated device group";
+			}
+            uses ethernet;
+            uses vlan;
+            uses ipv4;
+            uses bgp-config-top;
+            uses bgp-route-config;
+		}
+	}
+}

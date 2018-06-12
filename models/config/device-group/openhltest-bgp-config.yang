@@ -1,0 +1,133 @@
+submodule openhltest-bgp-config {
+
+    yang-version "1.1";
+    belongs-to "openhltest" {
+		prefix "oht";
+	}
+    
+    import openhltest-types {
+        prefix t;
+    }
+
+	organization
+      "OpenHlTest working group";
+    contact
+      "OpenHlTest working group";
+    description
+      "This module describes BGP protocol emulations.";
+
+    revision 2018-02-09 {
+        description
+          "Initial revision.";
+        reference
+          "0.0.1";
+    }
+
+    grouping bgp-config-top {
+        description
+        "A reuseable grouping of BGP device emulations.";
+
+		list bgp-config {
+			key "name";
+			description
+			"A list of BGP device emualtion";
+                       
+			leaf name {
+				type string;
+				description
+				"The unique name of BGP device";
+			}
+			uses t:protocol-link-group;
+			container as-num {
+				description
+				"The Autonomous system number for the emulated BGP router";
+                leaf value {
+                    type string;
+                }
+                uses t:pattern;
+			}
+			container dut-as-num {
+				description
+				"The Autonomous system number for the emulated BGP router";
+                leaf value {
+                    type string;
+                }
+                uses t:pattern;
+			}
+			leaf hold-time {
+				type string;
+				description
+				"The BGP Hold Time in seconds to use when negotiating with peers";
+			}
+		}
+	}
+    
+    
+    grouping bgp-route-config {
+        description
+        "A reuseable grouping of BGP IPv4 routes emulations";
+
+		list bgp-route-config {
+			key "name";
+			description
+			"A list of BGP IPv4 routes";
+                       
+			leaf name {
+				type string;
+				description
+				"The unique name of an emulated BGP IPv4 route";
+			}
+			uses t:protocol-link-group;
+
+			leaf as_path {
+				type string;
+				description
+				"The AS Path of an emulated BGP IPv4 route";
+			}
+            uses t:ipv4-network-group;
+            uses t:ipv6-network-group;
+		}
+	}
+    
+    grouping bgp-commands {
+        description
+        "A reuseable grouping of BGP commands.";
+
+		action start-bgp {
+			description
+			"Start one or more emulated BGP device.
+             An empty list signifies that all BGP devices will be started.";
+
+			input {
+				leaf-list device-group-names {
+					description "A list of device group names";
+					type string;
+				}
+			}
+			output {
+				uses t:errata-group {
+					description "A list of BGP device resources that failed to start.
+					An empty list signifies that all BGP devices successfully started.";
+				}
+			}
+		}
+		action stop-bgp {
+			description
+			"Stop one or more BGP device. 
+			 An empty list signifies that all BGP devices will be stopped.";
+
+			input {
+				leaf-list device-group-names {
+					description "A list of device group names";
+					type string;
+				}
+			}
+			output {
+				uses t:errata-group {
+					description "A list of BGP device resources that failed to stop.
+					An empty list signifies that all BGP devices successfully stopped.";
+				}
+			}
+		}
+	}
+}

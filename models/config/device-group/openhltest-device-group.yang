@@ -1,0 +1,104 @@
+submodule openhltest-device-group {
+
+    yang-version "1.1";
+    belongs-to "openhltest" {
+		prefix "oht";
+	}
+
+    import openhltest-types {
+        prefix t;
+    }
+	
+    include openhltest-devices;
+    include openhltest-bgp-config;
+    
+	organization
+      "OpenHlTest working group";
+    contact
+      "OpenHlTest working group";
+    description
+      "This module describes a collection of emulated protocols
+	  and associated rpcs.";
+
+    revision 2018-02-09 {
+        description
+          "Initial revision.";
+        reference
+          "0.0.1";
+    }
+
+    grouping device-group-top {
+        description
+        "A reuseable grouping of emulated protocols.
+		 A device group is a collection of emulated protocols sharing the 
+		 same group level scaling features.";
+
+		list device-groups {
+			key "name";
+			description
+			"A list of emulated device groups";
+            
+			leaf name {
+				type string;
+				description
+				"The unique name of an emulated device group";
+			}
+            
+			leaf-list port-name {
+				type string;
+				description
+				"The list of port-names";
+			}
+            
+			leaf devices-per-port {
+				type int32;
+				description
+				"The unique name of an emulated device group";
+			}
+            
+			leaf device-group-link {
+				type string;
+				description
+				"The unique name of an emulated device group";
+			}
+            uses devices-top;
+		}
+
+		action start-devices {
+			description
+			"Start one or more emulated device groups.
+			An empty list signifies that all device groups will be started.";
+
+			input {
+				leaf-list device-group-names {
+					description "A list of device group names";
+					type string;
+				}
+			}
+			output {
+				uses t:errata-group {
+					description "A list of device group resources that failed to start.
+					An empty list signifies that all device groups successfully started.";
+				}
+			}
+		}
+		action stop-devices {
+			description
+			"Stop one or more device groups. 
+			An empty list signifiels that all device groups will be stopped.";
+
+			input {
+				leaf-list device-group-names {
+					description "A list of device group names";
+					type string;
+				}
+			}
+			output {
+				uses t:errata-group {
+					description "A list of device group resources that failed to stop.
+					An empty list signifies that all device groups successfully stopped.";
+				}
+			}
+		}
+	}
+}

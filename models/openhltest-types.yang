@@ -1,0 +1,178 @@
+module openhltest-types {
+
+    yang-version "1.1";
+    namespace "http://openhltest.org/yang/types";
+    prefix "oht";
+
+    organization
+      "OpenHlTest working group";
+    contact
+      "OpenHlTest working group";
+    description
+      "This module defines types specific to the OpenHLTest models.";
+
+    revision 2018-02-01 {
+        description
+          "Initial revision.";
+        reference
+          "0.0.1";
+    }
+
+	grouping chassis-card-port-group {
+		description
+		"Reuseable unambiguous group definition for chassis, card and port"; 
+
+		leaf chassis {
+			description
+			"The ip address and/or hostname of the infrastructure that 
+			contains the physical or virtual test ports.";
+			type string;
+		}
+		leaf card {
+			description
+			"The one based card id that contains the physical or virtual test port";
+			default 1;
+			type uint16;
+		}
+		leaf port {
+			description
+			"The one based port id of the physical or virtual test port";
+			default 1;
+			type uint16;
+		}
+	}
+
+	grouping errata-group {
+		description
+		"A list of errata for keyed items that failed an action.";
+
+		list errata {
+			description 
+			"A list of rpc errors. 
+			An empty list indicates no errors occurred";
+			key "name";
+
+			leaf name {
+				description "The name of a keyed list object";
+				type string;
+			}
+			leaf detail {
+				description "Vendor specific detail of the error";
+				type string;
+			}
+			leaf stack-trace {
+				description "Optional stack trace of the error";
+				type string;
+			}
+		}
+	}
+
+	grouping pattern {
+		description
+		"Common modifier node.";
+
+        container increment-pattern {
+            leaf step-value {
+                description "Step Value";
+                type string;
+            }
+            leaf count {
+                description "Step Value";
+                type string;
+            }
+            leaf port-step-value {
+                description "Port Step Value";
+                type string;
+            }
+        }
+
+        container decrement-pattern {
+            leaf step-value {
+                description "Step Value";
+                type string;
+            }
+            leaf count {
+                description "Step Value";
+                type string;
+            }
+            leaf port-step-value {
+                description "Port Step Value";
+                type string;
+            }
+        }
+
+        container list-pattern {
+            leaf-list list-value {
+                description "Step Value";
+                type string;
+            }
+        }
+	}
+
+	grouping protocol-link-group {
+		description
+		"Common protocol-link node.";
+        container protocol-link {
+            leaf-list device-intf-link {
+                description "Vertical Link";
+                type string;
+            }
+            leaf-list device-group-intf-link {
+                description "Horizontal Link";
+                type string;
+            }
+        }
+	}
+    
+    
+	grouping ipv4-network-group {
+		description
+		"Common protocol-link node.";
+        container ipv4-network-group {
+			leaf network-count {
+				type int32;
+				description
+				"The Prefix Length of an emulated BGP IPv4 route";
+			}
+			container ipv4-address {
+				description
+				"The IPv4 address of an emulated BGP IPv4 route";
+                leaf value {
+                    type string;
+                }
+                uses pattern;
+			}
+			leaf prefix-length {
+				type string;
+				description
+				"The Prefix Length of an emulated BGP IPv4 route";
+			}
+        }
+	}
+    
+	grouping ipv6-network-group {
+		description
+		"Common protocol-link node.";
+        container ipv6-network-group {
+			leaf network-count {
+				type int32;
+				description
+				"The Prefix Length of an emulated BGP IPv4 route";
+			}
+			container ipv6-address {
+				description
+				"The IPv4 address of an emulated BGP IPv4 route";
+                leaf value {
+                    type string;
+                }
+                uses pattern;
+			}
+			leaf prefix-length {
+				type string;
+				description
+				"The Prefix Length of an emulated BGP IPv4 route";
+			}
+        }
+	}
+    
+}
