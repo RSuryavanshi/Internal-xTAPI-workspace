@@ -7,7 +7,8 @@
 
 - GITHUB basics
 
-- Travis CI
+- [Travis CI](https://travis-ci.org/)
+  - [Badges](http://shields.io/)
 
 - OpenHLTest Client
   - plugin(pyang): tool to generate client lib from yang model.
