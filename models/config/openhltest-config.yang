@@ -6,10 +6,8 @@ submodule openhltest-config {
 	}
 
     include openhltest-port;
-    include openhltest-port-config;
-	include openhltest-device-group;
+	include openhltest-device-groups;
 	include openhltest-traffic-group;
-    
 	
     organization
       "OpenHlTest working group";
@@ -30,8 +28,7 @@ submodule openhltest-config {
 			description 
 			"This container aggregates all other top level configuration submodules.";
 			uses port-top;
-            uses port-config-top;
-			uses device-group-top;
+			uses device-groups-top;
 			uses traffic-group-top;
 
 			action clear {

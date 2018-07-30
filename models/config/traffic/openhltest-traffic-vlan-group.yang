@@ -1,4 +1,4 @@
-submodule openhltest-traffic-ipv4-group {
+submodule openhltest-traffic-vlan-group {
 
     yang-version "1.1";
     belongs-to "openhltest" {
@@ -11,10 +11,7 @@ submodule openhltest-traffic-ipv4-group {
     import openhltest-patterns {
 		prefix p;
 	}
-	import ietf-inet-types {
-		prefix inet;
-	}
-	
+    
     organization
       "OpenHlTest working group";
     contact
@@ -30,12 +27,12 @@ submodule openhltest-traffic-ipv4-group {
           "0.0.1";
     }
 
-    grouping traffic-ipv4-group-top {
+    grouping traffic-vlan-group-top {
         description
         "A grouping of traffic groups.
 		 A traffic group is a collection of traffic streams and flows.";
 		
-        list ipv4 {
+        list vlan {
             key "name";
             description
             "A list frames";
@@ -50,31 +47,27 @@ submodule openhltest-traffic-ipv4-group {
                 description
                 "Frame Stack";
             }
-            leaf source-address {
-                type inet:ipv4-address;
-                description
-                "Source IPv4 Address";
-            }
-            container source-address-modifier {
-                description
-                "Source IPv4 Address modifier";
-                uses p:patterns-ipv4-config;
-            }
-            leaf destination-address {
-                type inet:ipv4-address;
-                description
-                "Destination IPv4 Address";
-            }
-            container destination-address-modifier {
-                description
-                "Source IPv4 Address modifier";
-                uses p:patterns-ipv4-config;
-            }
-			leaf ttl {
+			leaf priority {
+				if-feature t:unresolved-type;
+				type uint8 {
+                    range 0..7;
+                }
+				default "0";
+			}
+            container priority-modifier {
+                uses p:patterns-int32-config;
+			}
+			leaf id {
+				if-feature t:unresolved-type;
 				description
-				"The limited number of iterations that a unit of data can experience before 
-                the data is discarded.";
-				type uint8;
+					"A single-tagged VLAN id";  		
+				type uint16 {
+                    range 1..4095;
+                }
+				default "1";
+			}
+            container id-modifier {
+                uses p:patterns-int32-config;
 			}
         }
     }

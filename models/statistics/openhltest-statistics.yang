@@ -29,10 +29,14 @@ submodule openhltest-statistics {
     }
 
 	grouping statistics-top {
-		leaf result-type {
-			description "Timestamp of the first request to this session.";
-			type string;
-		}
+
+        /*leaf result-type {
+            type enumeration {
+                enum PORT;
+                enum BGP4;
+            }
+            default "PORT";
+        }*/
         
         leaf-list port-name {
             type string;
@@ -52,6 +56,7 @@ submodule openhltest-statistics {
 		}		
 		
 		uses port-statistics-top;
-        uses bgp-statistics;
+        uses bgp4-statistics;
+        uses bgp6-statistics;
 	}
 }

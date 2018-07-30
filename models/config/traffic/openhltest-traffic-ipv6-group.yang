@@ -1,4 +1,4 @@
-submodule openhltest-traffic-ethernet-group {
+submodule openhltest-traffic-ipv6-group {
 
     yang-version "1.1";
     belongs-to "openhltest" {
@@ -8,13 +8,13 @@ submodule openhltest-traffic-ethernet-group {
     import openhltest-types {
         prefix t;
     }
-	import ietf-yang-types {
-		prefix yang;
-	}
     import openhltest-patterns {
 		prefix p;
 	}
-    
+	import ietf-inet-types {
+		prefix inet;
+	}
+	
     organization
       "OpenHlTest working group";
     contact
@@ -30,12 +30,12 @@ submodule openhltest-traffic-ethernet-group {
           "0.0.1";
     }
 
-    grouping traffic-ethernet-group-top {
+    grouping traffic-ipv6-group-top {
         description
         "A grouping of traffic groups.
 		 A traffic group is a collection of traffic streams and flows.";
 		
-        list ethernet {
+        list ipv6 {
             key "name";
             description
             "A list frames";
@@ -51,35 +51,31 @@ submodule openhltest-traffic-ethernet-group {
                 "frame link";
             }
             leaf source-address {
-                type yang:mac-address;
+                type inet:ipv6-address;
                 description
-                "Source Mac Address";
+                "Source ipv6 Address";
             }
             container source-address-modifier {
                 description
-                "Source Mac Address modifier";
-                uses p:patterns-mac-config;
+                "Source ipv6 Address modifier";
+                uses p:patterns-ipv6-config;
             }
             leaf destination-address {
-                type yang:mac-address;
+                type inet:ipv6-address;
                 description
-                "Destination Mac Address";
+                "Destination ipv6 Address";
             }
             container destination-address-modifier {
                 description
-                "Source Mac Address modifier";
-                uses p:patterns-mac-config;
+                "Source ipv6 Address modifier";
+                uses p:patterns-ipv6-config;
             }
-            leaf ethernet-type {
-                type enumeration {
-                    enum 88B5;
-                    enum 86DD;
-                    enum 0800;
-                }
-                default "88B5";
-                description
-                "Ethernet type";
-            }
+			leaf ttl {
+				description
+				"The limited number of iterations that a unit of data can experience before 
+                the data is discarded.";
+				type uint8;
+			}
         }
     }
 

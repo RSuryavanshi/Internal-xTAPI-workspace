@@ -18,6 +18,20 @@ module openhltest-types {
           "0.0.1";
     }
 
+	feature unresolved-type {
+		description "The type in the leaf needs to be reviewed and approved by model principals.";
+	}
+
+	typedef config-list-key {
+		description "A type that contains only alpha numeric characters suitable for use in a list leaf node designated as the key.";
+		type string {
+			/*description "The pattern is a regex that defines a name to be used in all OpenHLTest keyed lists.
+			Use the pattern to determine if the supplied value is valid alpha numeric.
+			If the input is valid the regex should return no matches";*/
+			pattern "[a-zA-Z0-9 ]";
+		}
+	}
+
 	grouping chassis-card-port-group {
 		description
 		"Reuseable unambiguous group definition for chassis, card and port"; 
@@ -54,7 +68,7 @@ module openhltest-types {
 
 			leaf name {
 				description "The name of a keyed list object";
-				type string;
+				type config-list-key;
 			}
 			leaf detail {
 				description "Vendor specific detail of the error";
@@ -66,113 +80,4 @@ module openhltest-types {
 			}
 		}
 	}
-
-	grouping pattern {
-		description
-		"Common modifier node.";
-
-        container increment-pattern {
-            leaf step-value {
-                description "Step Value";
-                type string;
-            }
-            leaf count {
-                description "Step Value";
-                type string;
-            }
-            leaf port-step-value {
-                description "Port Step Value";
-                type string;
-            }
-        }
-
-        container decrement-pattern {
-            leaf step-value {
-                description "Step Value";
-                type string;
-            }
-            leaf count {
-                description "Step Value";
-                type string;
-            }
-            leaf port-step-value {
-                description "Port Step Value";
-                type string;
-            }
-        }
-
-        container list-pattern {
-            leaf-list list-value {
-                description "Step Value";
-                type string;
-            }
-        }
-	}
-
-	grouping protocol-link-group {
-		description
-		"Common protocol-link node.";
-        container protocol-link {
-            leaf-list device-intf-link {
-                description "Vertical Link";
-                type string;
-            }
-            leaf-list device-group-intf-link {
-                description "Horizontal Link";
-                type string;
-            }
-        }
-	}
-    
-    
-	grouping ipv4-network-group {
-		description
-		"Common protocol-link node.";
-        container ipv4-network-group {
-			leaf network-count {
-				type int32;
-				description
-				"The Prefix Length of an emulated BGP IPv4 route";
-			}
-			container ipv4-address {
-				description
-				"The IPv4 address of an emulated BGP IPv4 route";
-                leaf value {
-                    type string;
-                }
-                uses pattern;
-			}
-			leaf prefix-length {
-				type string;
-				description
-				"The Prefix Length of an emulated BGP IPv4 route";
-			}
-        }
-	}
-    
-	grouping ipv6-network-group {
-		description
-		"Common protocol-link node.";
-        container ipv6-network-group {
-			leaf network-count {
-				type int32;
-				description
-				"The Prefix Length of an emulated BGP IPv4 route";
-			}
-			container ipv6-address {
-				description
-				"The IPv4 address of an emulated BGP IPv4 route";
-                leaf value {
-                    type string;
-                }
-                uses pattern;
-			}
-			leaf prefix-length {
-				type string;
-				description
-				"The Prefix Length of an emulated BGP IPv4 route";
-			}
-        }
-	}
-    
 }

@@ -5,13 +5,16 @@ submodule openhltest-traffic-group {
 		prefix "oht";
 	}
 
-    include openhltest-traffic-ethernet-group;
-    include openhltest-traffic-ipv4-group;
-
     import openhltest-types {
         prefix t;
     }
-    
+	
+
+    include openhltest-traffic-ethernet-group;
+    include openhltest-traffic-vlan-group;
+    include openhltest-traffic-ipv4-group;
+    include openhltest-traffic-ipv6-group;
+
     organization
       "OpenHlTest working group";
     contact
@@ -38,32 +41,46 @@ submodule openhltest-traffic-group {
 			"A list of traffic groups";
 
 			leaf name {
-				type string;
+				type t:config-list-key;
 				description
 				"The unique name of a traffic group";
 			}
-			leaf-list src-endpoint-device-group-names {
+            leaf endpoint-mapping {
+                type enumeration {
+                    enum ONE_TO_ONE;
+                    enum FULL_MESHED;
+                }
+                description
+                  "The endpoint mapping";
+            }
+			leaf-list source-endpoints {
 				type string;
 				description
-				"The unique name of a traffic group";
+				"Source endpoints, devices name";
 			}
-			leaf-list dest-endpoint-device-group-names {
+			leaf-list destination-endpoints {
 				type string;
 				description
-				"The unique name of a traffic group";
+				"Destination endpoints, devices name";
 			}
-			leaf protocol-interface {
-				type string;
-				description
-				"The unique name of a traffic group";
-			}
+            leaf encapsulation {
+                type enumeration {
+                    enum ETHERNET;
+                    enum VLAN;
+                    enum IPV4;
+                    enum IPV6;
+                }
+                description
+                  "The type of encapsulation that will determine the type of generated frames 
+                  and associated learned info";
+            }
             
 			container frame-length {
                 container fixed-mode {
                     leaf frame-size {
                         type int32;
                         description
-                        "The unique name of a traffic group";
+                        "Fixed value for frame length";
                     }
                 }
 			}
@@ -72,37 +89,38 @@ submodule openhltest-traffic-group {
                 leaf value {
                     type int32;
                     description
-                    "The unique name of a traffic group";
+                    "Load value set on the streamblock/traffic-item. Load has different 
+                    meanings, based on load unit.";
                 }
                 leaf unit {
-                    type string;
                     description
-                    "The unique name of a traffic group";
+                    "Load unit applied to the stream block.";
+                    type enumeration {
+                        enum bps;
+                        enum kbps;
+                        enum mbps;
+                        enum fps;
+                    }
                 }
             }
 
             leaf bidirectional {
                 type boolean;
                 description
-                "The unique name of a traffic group";
+                "Direction of traffic flow between two end points";
             }
             
-            list frame {
-                key "name";
+            container frame {
                 description
                 "A list frames";
-                
-                leaf name {
-                    type string;
-                    description
-                    "The unique name";
-                }
                 uses traffic-ethernet-group-top;
+                uses traffic-vlan-group-top;
                 uses traffic-ipv4-group-top;
+                uses traffic-ipv6-group-top;
             }
             
 		}
-        
+
 		action start-traffic {
 			description
 			"Start one or more traffic groups.
